@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoBackupUtitlity.App", "PhotoBackupUtitlity.App\PhotoBackupUtitlity.App.csproj", "{DF597ACE-2D66-4B3D-808E-04C1C9237C95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoBackupUtility.App.Test", "PhotoBackupUtility.App.Test\PhotoBackupUtility.App.Test.csproj", "{6D65104D-A79B-42E7-A4A0-8B7B7E557C5A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF597ACE-2D66-4B3D-808E-04C1C9237C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF597ACE-2D66-4B3D-808E-04C1C9237C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF597ACE-2D66-4B3D-808E-04C1C9237C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF597ACE-2D66-4B3D-808E-04C1C9237C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D65104D-A79B-42E7-A4A0-8B7B7E557C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D65104D-A79B-42E7-A4A0-8B7B7E557C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D65104D-A79B-42E7-A4A0-8B7B7E557C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D65104D-A79B-42E7-A4A0-8B7B7E557C5A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
