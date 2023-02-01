@@ -11,13 +11,15 @@ public class ApplicationTest
         StringWriter writer = new();
         Console.SetOut(writer);
         Mock<IBackupStateService> backupStateServiceMock = new();
+        Mock<IFileCopyService> fileCopyService = new();
 
         backupStateServiceMock.Setup(q => q.GetFilesToBackup())
             .Returns(new List<FileInfo>());
-        
-        Application app = new Application(backupStateServiceMock.Object);
+
+        Application app = new Application(backupStateServiceMock.Object, fileCopyService.Object);
         app.Call();
         
+        fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Never);
         Assert.Equal("No Files To Backup\r\n", writer.ToString());
     }
 
@@ -27,29 +29,34 @@ public class ApplicationTest
         StringWriter writer = new();
         Console.SetOut(writer);
         Mock<IBackupStateService> backupStateService = new();
+        Mock<IFileCopyService> fileCopyService = new();
 
         backupStateService.Setup(q => q.GetFilesToBackup())
             .Returns(new List<FileInfo>() { file });
 
-        Application app = new Application(backupStateService.Object);
+        Application app = new Application(backupStateService.Object, fileCopyService.Object);
         app.Call();
         
+        fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Once);
+
         Assert.Equal("Backing Up - 101_0001.NEF\r\n", writer.ToString());
     }
 
-    [Fact(DisplayName = "Test Backing Up Files - Backing Up Multiple File")]
+    [Fact(DisplayName = "Test Backing Up Files - Backing Up Multiple Files")]
     public void TestBackingUpFiles_MultipleFiles()
     {
         StringWriter writer = new StringWriter();
         Console.SetOut(writer);
         Mock<IBackupStateService> backupStateService = new();
+        Mock<IFileCopyService> fileCopyService = new();
 
         backupStateService.Setup(q => q.GetFilesToBackup())
             .Returns(new List<FileInfo>() { file, file2 });
 
-        Application app = new(backupStateService.Object);
+        Application app = new(backupStateService.Object, fileCopyService.Object);
         app.Call();
         
+        fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Exactly(2));
         Assert.Equal("Backing Up - 101_0001.NEF\r\nBacking Up - 101_0002.NEF\r\n", writer.ToString());
     }
 }

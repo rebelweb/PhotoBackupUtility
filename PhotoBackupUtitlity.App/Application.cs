@@ -3,10 +3,13 @@
 public class Application
 {
     private readonly IBackupStateService _backupStateService;
+    private readonly IFileCopyService _fileCopyService;
 
-    public Application(IBackupStateService backupStateService)
+    public Application(IBackupStateService backupStateService,
+        IFileCopyService fileCopyService)
     {
         _backupStateService = backupStateService;
+        _fileCopyService = fileCopyService;
     }
     
     public void Call()
@@ -22,6 +25,7 @@ public class Application
         foreach (var file in filesToBackup)
         {
             Console.WriteLine($"Backing Up - {file.FilePath}");
+            _fileCopyService.CopyFile(file);
         }
     }
 }
