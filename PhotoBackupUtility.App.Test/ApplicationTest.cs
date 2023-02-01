@@ -20,6 +20,7 @@ public class ApplicationTest
         app.Call();
         
         fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Never);
+        backupStateServiceMock.Verify(q => q.UpdateBackupState(It.IsAny<List<FileInfo>>()), Times.Never());
         Assert.Equal("No Files To Backup\r\n", writer.ToString());
     }
 
@@ -38,6 +39,7 @@ public class ApplicationTest
         app.Call();
         
         fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Once);
+        backupStateService.Verify(q => q.UpdateBackupState(It.IsAny<List<FileInfo>>()), Times.Once);
 
         Assert.Equal("Backing Up - 101_0001.NEF\r\n", writer.ToString());
     }
@@ -57,6 +59,7 @@ public class ApplicationTest
         app.Call();
         
         fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Exactly(2));
+        backupStateService.Verify(q => q.UpdateBackupState(It.IsAny<List<FileInfo>>()), Times.Once);
         Assert.Equal("Backing Up - 101_0001.NEF\r\nBacking Up - 101_0002.NEF\r\n", writer.ToString());
     }
 }

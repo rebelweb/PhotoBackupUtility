@@ -27,5 +27,7 @@ public class Application
             Console.WriteLine($"Backing Up - {file.FilePath}");
             _fileCopyService.CopyFile(file);
         }
+
+        _backupStateService.UpdateBackupState(filesToBackup);
     }
 }
