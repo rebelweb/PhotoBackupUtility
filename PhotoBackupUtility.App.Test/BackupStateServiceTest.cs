@@ -22,4 +22,19 @@ public class BackupStateServiceTest
         
         Assert.Equal(3, files.Count);
     }
+
+    [Fact]
+    public void TestWritingStateFile()
+    {
+        List<FileInfo> files = new()
+        {
+            new() { FilePath = "" }
+        };
+        
+        BackupStateService service = new();
+        service.UpdateBackupState(files);
+
+        bool fileExists = File.Exists("./backup_state.json");
+        Assert.True(fileExists);
+    }
 }

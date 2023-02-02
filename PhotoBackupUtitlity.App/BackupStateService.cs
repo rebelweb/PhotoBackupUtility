@@ -1,4 +1,6 @@
-﻿namespace PhotoBackupUtility.App;
+﻿using System.Text.Json;
+
+namespace PhotoBackupUtility.App;
 
 public class BackupStateService : IBackupStateService
 {
@@ -37,6 +39,11 @@ public class BackupStateService : IBackupStateService
 
     public bool UpdateBackupState(List<FileInfo> updatedFiles)
     {
-        throw new NotImplementedException();
+        BackupState state = new() { Files = updatedFiles };
+        string jsonData = JsonSerializer.Serialize(state);
+        
+        File.WriteAllText("backup_state.json", jsonData);
+
+        return true;
     }
 }
