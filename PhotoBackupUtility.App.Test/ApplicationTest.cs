@@ -13,7 +13,7 @@ public class ApplicationTest
         Mock<IBackupStateService> backupStateServiceMock = new();
         Mock<IFileCopyService> fileCopyService = new();
 
-        backupStateServiceMock.Setup(q => q.GetFilesToBackup())
+        backupStateServiceMock.Setup(q => q.GetFilesToBackup("./"))
             .Returns(new List<FileInfo>());
 
         Application app = new Application(backupStateServiceMock.Object, fileCopyService.Object);
@@ -32,7 +32,7 @@ public class ApplicationTest
         Mock<IBackupStateService> backupStateService = new();
         Mock<IFileCopyService> fileCopyService = new();
 
-        backupStateService.Setup(q => q.GetFilesToBackup())
+        backupStateService.Setup(q => q.GetFilesToBackup("./"))
             .Returns(new List<FileInfo>() { file });
 
         Application app = new Application(backupStateService.Object, fileCopyService.Object);
@@ -52,7 +52,7 @@ public class ApplicationTest
         Mock<IBackupStateService> backupStateService = new();
         Mock<IFileCopyService> fileCopyService = new();
 
-        backupStateService.Setup(q => q.GetFilesToBackup())
+        backupStateService.Setup(q => q.GetFilesToBackup("./"))
             .Returns(new List<FileInfo>() { file, file2 });
 
         Application app = new(backupStateService.Object, fileCopyService.Object);

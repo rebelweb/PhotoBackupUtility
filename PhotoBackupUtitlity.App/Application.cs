@@ -14,7 +14,7 @@ public class Application
     
     public void Call()
     {
-        List<FileInfo> filesToBackup = _backupStateService.GetFilesToBackup();
+        List<FileInfo> filesToBackup = _backupStateService.GetFilesToBackup("./");
 
         if (!filesToBackup.Any())
         {

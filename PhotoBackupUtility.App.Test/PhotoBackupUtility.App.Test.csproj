@@ -26,4 +26,16 @@
     <ProjectReference Include="..\PhotoBackupUtitlity.App\PhotoBackupUtitlity.App.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Directory\Nested\sample3.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Directory\sample1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Directory\sample2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
