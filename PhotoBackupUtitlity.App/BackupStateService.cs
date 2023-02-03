@@ -4,9 +4,9 @@ namespace PhotoBackupUtility.App;
 
 public class BackupStateService : IBackupStateService
 {
-    public List<FileInfo> GetFilesToBackup(string parentDirectory)
+    public List<ManagedFileInfo> GetFilesToBackup(string parentDirectory)
     {
-        List<FileInfo> files = new();
+        List<ManagedFileInfo> files = new();
         
         if (!Directory.Exists(parentDirectory))
         {
@@ -18,26 +18,26 @@ public class BackupStateService : IBackupStateService
 
         foreach (var filePath in filePaths)
         {
-            FileInfo fileInfo = new()
+            ManagedFileInfo managedFileInfo = new()
             {
                 FilePath = filePath
             };
             
-            files.Add(fileInfo);
+            files.Add(managedFileInfo);
         }
 
         string[] directories = Directory.GetDirectories(parentDirectory);
 
         foreach (var directory in directories)
         {
-            List<FileInfo> nestedFiles = GetFilesToBackup(directory);
+            List<ManagedFileInfo> nestedFiles = GetFilesToBackup(directory);
             files.AddRange(nestedFiles);
         }
         
         return files;
     }
 
-    public bool UpdateBackupState(List<FileInfo> updatedFiles)
+    public bool UpdateBackupState(List<ManagedFileInfo> updatedFiles)
     {
         BackupState state = new() { Files = updatedFiles };
         string jsonData = JsonSerializer.Serialize(state);

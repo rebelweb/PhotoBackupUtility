@@ -10,7 +10,7 @@ public class FileCopyServiceTest
     public async Task TestCopyFile_Fails()
     {
         Mock<IAmazonS3> s3Client = new();
-        FileInfo info = new() { FilePath = "./Directory/sample1.txt" };
+        ManagedFileInfo info = new() { FilePath = "./Directory/sample1.txt" };
 
         PutObjectResponse response = new() { HttpStatusCode = HttpStatusCode.UnprocessableEntity };
 
@@ -27,7 +27,7 @@ public class FileCopyServiceTest
     public async Task TestCopyFile_Success()
     {
         Mock<IAmazonS3> s3Client = new();
-        FileInfo info = new() { FilePath = "./Directory/sample1.txt" };
+        ManagedFileInfo info = new() { FilePath = "./Directory/sample1.txt" };
 
         PutObjectResponse response = new() { HttpStatusCode = HttpStatusCode.OK };
 

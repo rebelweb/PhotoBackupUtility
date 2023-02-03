@@ -2,7 +2,7 @@
 
 public interface IBackupStateService
 {
-    List<FileInfo> GetFilesToBackup(string parentDirectory);
+    List<ManagedFileInfo> GetFilesToBackup(string parentDirectory);
 
-    bool UpdateBackupState(List<FileInfo> updatedFiles);
+    bool UpdateBackupState(List<ManagedFileInfo> updatedFiles);
 }

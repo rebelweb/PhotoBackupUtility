@@ -13,14 +13,14 @@ public class FileCopyService : IFileCopyService
         _s3Client = s3Client;
     }
     
-    public async Task<bool> CopyFile(FileInfo fileInfo)
+    public async Task<bool> CopyFile(ManagedFileInfo managedFileInfo)
     {
-        FileStream stream = File.Open(fileInfo.FilePath, FileMode.Open);
+        FileStream stream = File.Open(managedFileInfo.FilePath, FileMode.Open);
         
         PutObjectRequest request = new()
         {
             BucketName = "mybucket",
-            Key = fileInfo.FilePath,
+            Key = managedFileInfo.FilePath,
             InputStream = stream
         };
         

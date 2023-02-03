@@ -18,7 +18,7 @@ public class BackupStateServiceTest
     public void TestGetBackupState_ParentDirectoryExists()
     {
         BackupStateService service = new();
-        List<FileInfo> files = service.GetFilesToBackup("./Directory");
+        List<ManagedFileInfo> files = service.GetFilesToBackup("./Directory");
         
         Assert.Equal(3, files.Count);
     }
@@ -26,7 +26,7 @@ public class BackupStateServiceTest
     [Fact]
     public void TestWritingStateFile()
     {
-        List<FileInfo> files = new()
+        List<ManagedFileInfo> files = new()
         {
             new() { FilePath = "" }
         };

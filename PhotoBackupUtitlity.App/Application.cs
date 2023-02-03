@@ -14,7 +14,7 @@ public class Application
     
     public async Task Call()
     {
-        List<FileInfo> filesToBackup = _backupStateService.GetFilesToBackup("./");
+        List<ManagedFileInfo> filesToBackup = _backupStateService.GetFilesToBackup("./");
 
         if (!filesToBackup.Any())
         {

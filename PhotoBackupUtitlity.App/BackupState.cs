@@ -5,5 +5,5 @@ namespace PhotoBackupUtility.App;
 public class BackupState
 {
     [JsonPropertyName("files")]
-    public List<FileInfo> Files { get; set; }
+    public List<ManagedFileInfo> Files { get; set; }
 }
