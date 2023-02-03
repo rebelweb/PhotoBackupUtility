@@ -2,5 +2,5 @@
 
 public interface IFileCopyService
 {
-    bool CopyFile(FileInfo fileInfo);
+    Task<bool> CopyFile(FileInfo fileInfo);
 }

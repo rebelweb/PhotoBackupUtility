@@ -23,6 +23,7 @@ public static class Program
 	{
 		services.AddScoped<IAmazonS3>(provider => new AmazonS3Client());
 		services.AddScoped<IBackupStateService, BackupStateService>();
+		services.AddScoped<IFileCopyService, FileCopyService>();
 		services.AddScoped<Application>();
 		return services;
 	}
