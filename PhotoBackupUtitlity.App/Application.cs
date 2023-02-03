@@ -12,7 +12,7 @@ public class Application
         _fileCopyService = fileCopyService;
     }
     
-    public void Call()
+    public async Task Call()
     {
         List<FileInfo> filesToBackup = _backupStateService.GetFilesToBackup("./");
 
@@ -25,7 +25,7 @@ public class Application
         foreach (var file in filesToBackup)
         {
             Console.WriteLine($"Backing Up - {file.FilePath}");
-            _fileCopyService.CopyFile(file);
+            await _fileCopyService.CopyFile(file);
         }
 
         _backupStateService.UpdateBackupState(filesToBackup);

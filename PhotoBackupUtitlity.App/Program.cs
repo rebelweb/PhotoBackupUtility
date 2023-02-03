@@ -5,7 +5,7 @@ namespace PhotoBackupUtility.App;
 
 public static class Program
 {
-	public static void Main(string[] args)
+	public static async Task Main(string[] args)
 	{
 		Console.WriteLine("Backing Up Your Photos");
 
@@ -16,7 +16,7 @@ public static class Program
 		
 		Application app = provider.GetService<Application>();
 		
-		app.Call();
+		await app.Call();
 	}
 
 	private static IServiceCollection RegisterServices(IServiceCollection services)

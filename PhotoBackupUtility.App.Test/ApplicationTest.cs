@@ -6,7 +6,7 @@ public class ApplicationTest
     private FileInfo file2 = new() { FilePath = "101_0002.NEF" };
     
     [Fact(DisplayName = "Test Backing Up Files - No Files To Backup")]
-    public void TestBackingUpFile_NoFilesToBackUp()
+    public async Task TestBackingUpFile_NoFilesToBackUp()
     {
         StringWriter writer = new();
         Console.SetOut(writer);
@@ -17,7 +17,7 @@ public class ApplicationTest
             .Returns(new List<FileInfo>());
 
         Application app = new Application(backupStateServiceMock.Object, fileCopyService.Object);
-        app.Call();
+        await app.Call();
         
         fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Never);
         backupStateServiceMock.Verify(q => q.UpdateBackupState(It.IsAny<List<FileInfo>>()), Times.Never());
@@ -25,7 +25,7 @@ public class ApplicationTest
     }
 
     [Fact(DisplayName = "Test Backing Up Files - Backing Up One File")]
-    public void TestBackingUpFiles_SingleFile()
+    public async Task TestBackingUpFiles_SingleFile()
     {
         StringWriter writer = new();
         Console.SetOut(writer);
@@ -36,7 +36,7 @@ public class ApplicationTest
             .Returns(new List<FileInfo>() { file });
 
         Application app = new Application(backupStateService.Object, fileCopyService.Object);
-        app.Call();
+        await app.Call();
         
         fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Once);
         backupStateService.Verify(q => q.UpdateBackupState(It.IsAny<List<FileInfo>>()), Times.Once);
@@ -45,7 +45,7 @@ public class ApplicationTest
     }
 
     [Fact(DisplayName = "Test Backing Up Files - Backing Up Multiple Files")]
-    public void TestBackingUpFiles_MultipleFiles()
+    public async Task TestBackingUpFiles_MultipleFiles()
     {
         StringWriter writer = new StringWriter();
         Console.SetOut(writer);
@@ -56,7 +56,7 @@ public class ApplicationTest
             .Returns(new List<FileInfo>() { file, file2 });
 
         Application app = new(backupStateService.Object, fileCopyService.Object);
-        app.Call();
+        await app.Call();
         
         fileCopyService.Verify(q => q.CopyFile(It.IsAny<FileInfo>()), Times.Exactly(2));
         backupStateService.Verify(q => q.UpdateBackupState(It.IsAny<List<FileInfo>>()), Times.Once);
