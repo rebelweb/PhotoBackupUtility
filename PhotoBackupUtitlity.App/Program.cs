@@ -1,5 +1,7 @@
 ﻿using Amazon.S3;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhotoBackupUtility.App.Configuration;
 
 namespace PhotoBackupUtility.App;
 
@@ -19,12 +21,22 @@ public static class Program
 		await app.Call();
 	}
 
-	private static IServiceCollection RegisterServices(IServiceCollection services)
+	private static void RegisterServices(IServiceCollection services)
 	{
-		services.AddScoped<IAmazonS3>(provider => new AmazonS3Client());
+		services.AddScoped<IAmazonS3, AmazonS3Client>();
 		services.AddScoped<IBackupStateService, BackupStateService>();
 		services.AddScoped<IFileCopyService, FileCopyService>();
 		services.AddScoped<Application>();
-		return services;
+		BuildConfiguration(services);
+	}
+
+	private static void BuildConfiguration(IServiceCollection services)
+	{
+		var configuration = new ConfigurationBuilder()
+			.SetBasePath(Directory.GetCurrentDirectory())
+			.AddJsonFile("configuration.json", false)
+			.Build();
+
+		services.Configure<ISettings>(config => configuration.GetSection("App").Bind(config));
 	}
 }
