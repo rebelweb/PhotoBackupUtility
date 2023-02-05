@@ -1,6 +1,7 @@
 ﻿using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PhotoBackupUtility.App.Configuration;
 
 namespace PhotoBackupUtility.App;
@@ -9,8 +10,6 @@ public static class Program
 {
 	public static async Task Main(string[] args)
 	{
-		Console.WriteLine("Backing Up Your Photos");
-
 		ServiceCollection serviceCollection = new ServiceCollection();
 		RegisterServices(serviceCollection);
 
@@ -27,6 +26,8 @@ public static class Program
 		services.AddScoped<IBackupStateService, BackupStateService>();
 		services.AddScoped<IFileCopyService, FileCopyService>();
 		services.AddScoped<Application>();
+		services.AddLogging(config => config.AddConsole());
+		
 		BuildConfiguration(services);
 	}
 

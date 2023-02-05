@@ -4,13 +4,20 @@ namespace PhotoBackupUtility.App;
 
 public class BackupStateService : IBackupStateService
 {
+    private readonly ILogger<BackupStateService> _logger;
+
+    public BackupStateService(ILogger<BackupStateService> logger)
+    {
+        _logger = logger;
+    }
+
     public List<ManagedFileInfo> GetFilesToBackup(string parentDirectory)
     {
         List<ManagedFileInfo> files = new();
         
         if (!Directory.Exists(parentDirectory))
         {
-            Console.WriteLine("Parent Directory Does Not Exist - Nothing To Backup");
+            _logger.LogWarning("Parent Directory Does Not Exist - Nothing To Backup");
             return files;
         }
 

@@ -1,37 +1,39 @@
-﻿namespace PhotoBackupUtility.App.Test;
+﻿using Moq.AutoMock;
+
+namespace PhotoBackupUtility.App.Test;
 
 public class BackupStateServiceTest
 {
     [Fact(DisplayName = "Get Backup State - Parent Directory Missing")]
     public void TestGetBackupState_ParentDirectoryMissing()
     {
-        StringWriter writer = new();
-        Console.SetOut(writer);
-        
-        BackupStateService service = new();
-        service.GetFilesToBackup("Z:\\");
-
-        Assert.Equal("Parent Directory Does Not Exist - Nothing To Backup\r\n", writer.ToString());
+        AutoMocker mocker = new();
+        BackupStateService service = mocker.CreateInstance<BackupStateService>();
+        List<ManagedFileInfo> files = service.GetFilesToBackup("Z:\\");
+        Assert.Empty(files);
     }
 
     [Fact(DisplayName = "Get Backup State - Parent Directory Exists")]
     public void TestGetBackupState_ParentDirectoryExists()
     {
-        BackupStateService service = new();
+        AutoMocker mocker = new();
+        BackupStateService service = mocker.CreateInstance<BackupStateService>();
         List<ManagedFileInfo> files = service.GetFilesToBackup("./Directory");
         
         Assert.Equal(3, files.Count);
     }
 
-    [Fact]
+    [Fact(DisplayName = "Writes State File")]
     public void TestWritingStateFile()
     {
+        AutoMocker mocker = new();
+        
         List<ManagedFileInfo> files = new()
         {
             new() { FilePath = "" }
         };
         
-        BackupStateService service = new();
+        BackupStateService service = mocker.CreateInstance<BackupStateService>();
         service.UpdateBackupState(files);
 
         bool fileExists = File.Exists("./backup_state.json");
