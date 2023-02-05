@@ -38,6 +38,7 @@ public static class Program
 			.AddJsonFile("configuration.json", false)
 			.Build();
 
-		services.Configure<ISettings>(config => configuration.GetSection("App").Bind(config));
+		services.Configure<Settings>(config => configuration.GetSection("App").Bind(config));
+		services.AddScoped<ISettings, Settings>();
 	}
 }
