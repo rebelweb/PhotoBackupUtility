@@ -22,15 +22,26 @@ public static class Program
 
 	private static void RegisterServices(IServiceCollection services)
 	{
-		services.AddScoped<IAmazonS3, AmazonS3Client>();
 		services.AddScoped<IBackupStateService, BackupStateService>();
 		services.AddScoped<IFileCopyService, FileCopyService>();
+		services.AddScoped<ICurrentBackupStateBuilder, CurrentBackupStateBuilder>();
 		services.AddScoped<Application>();
 		services.AddLogging(config => config.AddConsole());
 		
 		BuildConfiguration(services);
+		BuildAwsClient(services);
 	}
 
+	private static void BuildAwsClient(IServiceCollection services)
+	{
+		services.AddScoped<IAmazonS3, AmazonS3Client>(provider =>
+		{
+			ISettings settings = provider.GetService<ISettings>();
+			
+			return new AmazonS3Client(settings.AwsKey, settings.AwsSecret);
+		});
+	}
+	
 	private static void BuildConfiguration(IServiceCollection services)
 	{
 		var configuration = new ConfigurationBuilder()
