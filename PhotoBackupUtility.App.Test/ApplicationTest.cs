@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq.AutoMock;
+using PhotoBackupUtility.App.Configuration;
 
 namespace PhotoBackupUtility.App.Test;
 
@@ -12,10 +13,9 @@ public class ApplicationTest
     public async Task TestBackingUpFile_NoFilesToBackUp()
     {
         AutoMocker mocker = new();
-        
-        Mock<IBackupStateService> backupStateServiceMock = new();
-        Mock<IFileCopyService> fileCopyService = new();
 
+        mocker.GetMock<ISettings>().Setup(q => q.ParentDirectory).Returns("Z:\\");
+        
         mocker.GetMock<IBackupStateService>().Setup(q => q.GetFilesToBackup("Z:\\"))
             .Returns(new List<ManagedFileInfo>());
 
@@ -31,6 +31,8 @@ public class ApplicationTest
     {
         AutoMocker mocker = new();
 
+        mocker.GetMock<ISettings>().Setup(q => q.ParentDirectory).Returns("Z:\\");
+        
         mocker.GetMock<IBackupStateService>().Setup(q => q.GetFilesToBackup("Z:\\"))
             .Returns(new List<ManagedFileInfo>() { _managedFile });
 
@@ -45,6 +47,8 @@ public class ApplicationTest
     public async Task TestBackingUpFiles_MultipleFiles()
     {
         AutoMocker mocker = new();
+
+        mocker.GetMock<ISettings>().Setup(q => q.ParentDirectory).Returns("Z:\\");
         
         mocker.GetMock<IBackupStateService>().Setup(q => q.GetFilesToBackup("Z:\\"))
             .Returns(new List<ManagedFileInfo>() { _managedFile, file2 });
