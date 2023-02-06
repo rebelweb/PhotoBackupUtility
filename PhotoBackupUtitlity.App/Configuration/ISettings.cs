@@ -9,4 +9,6 @@ public interface ISettings
     string AwsSecret { get; set; }
     
     string BucketName { get; set; }
+    
+    string[] FileExtensions { get; set; }
 }

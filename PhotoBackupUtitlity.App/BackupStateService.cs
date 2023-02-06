@@ -1,14 +1,19 @@
 ﻿using System.Text.Json;
+using PhotoBackupUtility.App.Configuration;
 
 namespace PhotoBackupUtility.App;
 
 public class BackupStateService : IBackupStateService
 {
     private readonly ILogger<BackupStateService> _logger;
+    private readonly ISettings _settings;
 
-    public BackupStateService(ILogger<BackupStateService> logger)
+
+    public BackupStateService(ILogger<BackupStateService> logger,
+        ISettings settings)
     {
         _logger = logger;
+        _settings = settings;
     }
 
     public List<ManagedFileInfo> GetFilesToBackup(string parentDirectory)
@@ -21,16 +26,19 @@ public class BackupStateService : IBackupStateService
             return files;
         }
 
-        string[] filePaths = Directory.GetFiles(parentDirectory);
-
-        foreach (var filePath in filePaths)
+        foreach (var fileExtension in _settings.FileExtensions)
         {
-            ManagedFileInfo managedFileInfo = new()
+            string[] filePaths = Directory.GetFiles(parentDirectory, $"*.{fileExtension}");
+
+            foreach (var filePath in filePaths)
             {
-                FilePath = filePath
-            };
+                ManagedFileInfo managedFileInfo = new()
+                {
+                    FilePath = filePath
+                };
             
-            files.Add(managedFileInfo);
+                files.Add(managedFileInfo);
+            }
         }
 
         string[] directories = Directory.GetDirectories(parentDirectory);

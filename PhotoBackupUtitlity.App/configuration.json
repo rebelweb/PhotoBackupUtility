@@ -1,6 +1,11 @@
 ﻿{
-  "parentDirectory": "Z:\\",
+  "parentDirectory": "E:\\Photos",
   "awsKey": "",
   "awsSecret": "",
-  "bucketName": ""
+  "bucketName": "",
+  "fileExtensions": [
+    "NEF",
+    "dmg",
+    "JPG"
+  ]
 }

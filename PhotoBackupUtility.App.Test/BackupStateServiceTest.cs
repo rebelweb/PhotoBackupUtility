@@ -1,4 +1,5 @@
 ﻿using Moq.AutoMock;
+using PhotoBackupUtility.App.Configuration;
 
 namespace PhotoBackupUtility.App.Test;
 
@@ -17,6 +18,10 @@ public class BackupStateServiceTest
     public void TestGetBackupState_ParentDirectoryExists()
     {
         AutoMocker mocker = new();
+
+        mocker.GetMock<ISettings>().Setup(q => q.FileExtensions)
+            .Returns(new string[] { "txt" });
+        
         BackupStateService service = mocker.CreateInstance<BackupStateService>();
         List<ManagedFileInfo> files = service.GetFilesToBackup("./Directory");
         
