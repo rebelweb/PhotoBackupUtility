@@ -37,6 +37,8 @@ public class BackupStateServiceTest
         {
             new() { FilePath = "" }
         };
+
+        mocker.GetMock<ISettings>().Setup(q => q.StateFileName).Returns("backup_state.json");
         
         BackupStateService service = mocker.CreateInstance<BackupStateService>();
         service.UpdateBackupState(files);

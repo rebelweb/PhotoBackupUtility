@@ -57,7 +57,7 @@ public class BackupStateService : IBackupStateService
         BackupState state = new() { Files = updatedFiles };
         string jsonData = JsonSerializer.Serialize(state);
         
-        File.WriteAllText("backup_state.json", jsonData);
+        File.WriteAllText(_settings.StateFileName, jsonData);
 
         return true;
     }
