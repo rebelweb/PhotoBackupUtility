@@ -11,4 +11,6 @@ public interface ISettings
     string BucketName { get; set; }
     
     string[] FileExtensions { get; set; }
+    
+    string StateFileName { get; }
 }

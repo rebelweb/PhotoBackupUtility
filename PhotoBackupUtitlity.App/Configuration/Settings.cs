@@ -8,4 +8,6 @@ public class Settings : ISettings
     public string BucketName { get; set; }
     
     public string[] FileExtensions { get; set; }
+
+    public string StateFileName => "backup_state.json";
 }

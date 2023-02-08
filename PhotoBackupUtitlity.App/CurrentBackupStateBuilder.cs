@@ -51,7 +51,7 @@ public class CurrentBackupStateBuilder : ICurrentBackupStateBuilder
     {
         BackupState state = new() { Files = files };
         string data = JsonSerializer.Serialize(state);
-        File.WriteAllText("backup_state.json", data);
+        File.WriteAllText(_settings.StateFileName, data);
         return true;
     }
     

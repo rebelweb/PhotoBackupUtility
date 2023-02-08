@@ -6,6 +6,7 @@ public class Application
 {
     private readonly IBackupStateService _backupStateService;
     private readonly IFileCopyService _fileCopyService;
+    private readonly ICurrentBackupStateBuilder _builder;
     private readonly ILogger<Application> _logger;
     private readonly ISettings _settings;
 
